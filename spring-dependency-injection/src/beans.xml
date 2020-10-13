@@ -6,17 +6,19 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-	<bean id = "x" class = "com.hsbc.Aadhar"></bean>
+	<bean id = "profileDAO" class = "com.hsbc.model.dao.ProfileDaoImpl">
+		<property name = "dbUtility" ref = "db"></property>
+	</bean>
 	
-	<bean id = "dbConfig" class = "com.hsbc.model.util.DBUtility">
+	<bean id = "service" class = "com.hsbc.model.service.ProfileServiceImpl">
+		<property name="dao" ref = "profileDAO"></property> <!-- setter injection -->
+	</bean>
+	
+	
+	<bean id = "db" class = "com.hsbc.model.dao.DBUtility">
 		<property name = "driverClass" value = "org.apache.derby.jdbc.ClientDriver"></property>
 		<property name="url" value = "jdbc:derby://localhost:1527/wfs7_batch"></property>
 		<property name="username" value = "admin"></property>
 		<property name="password" value = "admin"></property>
 	</bean>
-	
-	<bean id = "dbQueries" class = "com.hsbc.model.util.DBQueries">
-		<property name = "insertQuery" value = "insert into user_profile(next value for user_seq, ?, ?)"></property>
-	</bean>
-
 </beans>
